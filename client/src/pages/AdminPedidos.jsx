@@ -12,7 +12,7 @@ function AdminPedidos() {
   }, []);
 
   const cargarPedidos = () => {
-    axios.get('http://localhost:5000/api/pedidos')
+    axios.get('https://proyecto-cristian-erre.onrender.com/api/pedidos')
       .then(res => {
         setPedidos(res.data);
         setLoading(false);
@@ -24,7 +24,7 @@ function AdminPedidos() {
   const marcarComoEnviado = async (id) => {
     if (!confirm("¿Confirmas que ya enviaste este paquete?")) return;
     try {
-      await axios.put(`http://localhost:5000/api/pedidos/${id}`);
+      await axios.put(`https://proyecto-cristian-erre.onrender.com/api/pedidos/${id}`);
       cargarPedidos(); // Recargamos la lista para ver el cambio
     } catch (error) {
       alert("Error al actualizar");

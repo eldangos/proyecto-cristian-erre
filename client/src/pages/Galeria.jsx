@@ -7,7 +7,7 @@ function Galeria() {
 
   useEffect(() => {
     // Truco: Agregamos un timestamp (?t=...) para evitar que el navegador guarde caché vieja
-    axios.get('http://localhost:5000/api/obras?t=' + Date.now())
+    axios.get('https://proyecto-cristian-erre.onrender.com/api/obras?t=' + Date.now())
       .then(res => setObras(res.data))
       .catch(err => console.error(err));
   }, []);

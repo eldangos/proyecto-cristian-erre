@@ -30,7 +30,7 @@ function Checkout() {
 
     try {
       // Enviamos el pedido a TU Backend
-      await axios.post('http://localhost:5000/api/pedidos', nuevoPedido);
+      await axios.post('https://proyecto-cristian-erre.onrender.com/api/pedidos', nuevoPedido);
       
       alert('¡GRACIAS POR TU COMPRA! El pedido ha sido guardado.');
       // Aquí podríamos vaciar el carrito (pendiente)

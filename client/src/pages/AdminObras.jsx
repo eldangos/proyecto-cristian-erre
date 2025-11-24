@@ -20,7 +20,7 @@ function AdminObras() {
   const obtenerObras = async () => {
     try {
       // Agregamos un timestamp para asegurar que traiga datos frescos
-      const respuesta = await axios.get('http://localhost:5000/api/obras?t=' + Date.now());
+      const respuesta = await axios.get('https://proyecto-cristian-erre.onrender.com/api/obras?t=' + Date.now());
       setObras(respuesta.data);
     } catch (error) {
       console.error("Error cargando obras:", error);
@@ -34,7 +34,7 @@ function AdminObras() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/obras', form);
+      await axios.post('https://proyecto-cristian-erre.onrender.com/api/obras', form);
       alert('¡Obra guardada con éxito!');
       setForm({ titulo: '', descripcion: '', tecnica: '', precio: '', imagenURL: '' }); 
       obtenerObras(); 
@@ -46,7 +46,7 @@ function AdminObras() {
   const eliminarObra = async (id) => {
     if(!confirm('¿Seguro que quieres eliminar esta obra?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/obras/${id}`);
+      await axios.delete(`https://proyecto-cristian-erre.onrender.com/api/obras/${id}`);
       obtenerObras();
     } catch (error) {
       console.error(error);
@@ -57,7 +57,7 @@ function AdminObras() {
   const reactivarObra = async (id) => {
     try {
       // Enviamos "disponible: true" al servidor
-      await axios.put(`http://localhost:5000/api/obras/${id}`, { disponible: true });
+      await axios.put(`https://proyecto-cristian-erre.onrender.com/api/obras/${id}`, { disponible: true });
       alert("¡Obra disponible de nuevo!");
       obtenerObras(); // Recargamos la lista para ver el cambio inmediato
     } catch (error) {
