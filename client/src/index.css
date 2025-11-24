@@ -1,0 +1,55 @@
+:root {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark; 
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #121212; 
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ANIMACIONES */
+
+/* Definimos la animación de aparecer */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Clase para usar en las imágenes */
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Clase para botones elegantes */
+.btn-minimal {
+  background: white;
+  color: black;
+  border: 1px solid white;
+  transition: all 0.3s ease;
+}
+
+.btn-minimal:hover {
+  background: transparent;
+  color: white;
+  transform: scale(1.05);
+  cursor: pointer;
+}
