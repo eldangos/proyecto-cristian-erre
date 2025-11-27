@@ -45,4 +45,28 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+
+router.delete('/:id', async (req, res) => {
+  try {
+    // 1. Buscamos el pedido para saber qué obras tenía
+    const pedido = await Pedido.findById(req.params.id);
+    if (!pedido) return res.status(404).json({ message: 'Pedido no encontrado' });
+
+    // 2. Recorremos los items y los reactivamos en la colección de Obras
+    // (Esto cambia disponible: false -> true)
+    for (const item of pedido.items) {
+      if (item.obraId) {
+        await Obra.findByIdAndUpdate(item.obraId, { disponible: true });
+      }
+    }
+
+    // 3. Ahora sí, borramos el pedido de la base de datos
+    await Pedido.findByIdAndDelete(req.params.id);
+
+    res.json({ message: 'Pedido cancelado y stock restaurado' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

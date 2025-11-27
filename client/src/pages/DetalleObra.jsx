@@ -9,7 +9,7 @@ function DetalleObra() {
   const { addToCart } = useCart(); // <--- 2. Sacar la función addToCart del contexto
 
   useEffect(() => {
-    axios.get(`https://proyecto-cristian-erre.onrender.com/api/obras/${id}`)
+    axios.get(`http://localhost:5000/api/obras/${id}`)
       .then(res => setObra(res.data))
       .catch(err => console.error(err));
   }, [id]);

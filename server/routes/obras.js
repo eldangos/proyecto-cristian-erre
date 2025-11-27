@@ -58,4 +58,33 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.put('/eliminar/:id', async (req, res) => {
+  try {
+    const { motivo } = req.body; // Recibimos el motivo desde el frontend
+
+    const obraActualizada = await Obra.findByIdAndUpdate(
+      req.params.id,
+      { 
+        eliminada: true, 
+        disponible: false, // Si se borra, ya no se puede comprar
+        motivoEliminacion: motivo,
+        fechaEliminacion: new Date()
+      },
+      { new: true }
+    );
+    res.json(obraActualizada);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+router.delete('/definitivo/:id', async (req, res) => {
+  try {
+    await Obra.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Obra eliminada permanentemente' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;
