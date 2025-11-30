@@ -87,4 +87,14 @@ router.delete('/definitivo/:id', async (req, res) => {
   }
 });
 
+// DELETE: Borrado DEFINITIVO (Físico) - Para limpiar la papelera
+router.delete('/definitivo/:id', async (req, res) => {
+  try {
+    await Obra.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Obra eliminada permanentemente de la base de datos' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

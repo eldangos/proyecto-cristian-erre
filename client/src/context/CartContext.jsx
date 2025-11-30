@@ -1,38 +1,49 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
-// 1. Creamos el contexto (la memoria global)
 const CartContext = createContext();
 
-// 2. Hook personalizado para usar el carrito fácil en cualquier lado
 export const useCart = () => useContext(CartContext);
 
-// 3. El Proveedor (envuelve a toda la app para darle acceso al carrito)
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]); // Aquí se guardan las obras
+  // Intentamos leer el carrito guardado en localStorage al iniciar
+  const [cart, setCart] = useState(() => {
+    try {
+      const storedCart = localStorage.getItem('cart');
+      return storedCart ? JSON.parse(storedCart) : [];
+    } catch (error) {
+      return [];
+    }
+  });
 
-  // Función para agregar
+  // Cada vez que el carrito cambie, lo guardamos en localStorage para no perderlo al recargar
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
   const addToCart = (product) => {
-    // Verificamos si ya está en el carrito para no duplicar
     const exists = cart.find(item => item._id === product._id);
     if (exists) {
       alert("⚠️ Esta obra única ya está en tu carrito.");
       return;
     }
-    
     setCart([...cart, product]);
-    alert("✅ ¡Obra añadida al carrito con éxito!");
+    alert("✅ ¡Obra añadida al carrito!");
   };
 
-  // Función para eliminar
   const removeFromCart = (id) => {
     setCart(cart.filter(item => item._id !== id));
   };
 
-  // Función para calcular total
+  // NUEVA FUNCIÓN: VACIAR EL CARRITO
+  const clearCart = () => {
+    setCart([]); // Lo deja vacío
+    localStorage.removeItem('cart'); // Limpia la memoria del navegador
+  };
+
   const total = cart.reduce((acc, item) => acc + item.precio, 0);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, total }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, total }}>
       {children}
     </CartContext.Provider>
   );

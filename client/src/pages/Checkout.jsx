@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function Checkout() {
-  const { cart, total, cart: clearCart } = useCart(); // Necesitamos leer el carrito y el total
+  // Importamos la nueva función clearCart
+  const { cart, total, clearCart } = useCart();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -21,7 +22,6 @@ function Checkout() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Armamos el paquete de datos para el servidor
     const nuevoPedido = {
       comprador: formData,
       items: cart.map(item => ({ obraId: item._id, titulo: item.titulo, precio: item.precio })),
@@ -29,11 +29,13 @@ function Checkout() {
     };
 
     try {
-      // Enviamos el pedido a TU Backend
       await axios.post('http://localhost:5000/api/pedidos', nuevoPedido);
       
-      alert('¡GRACIAS POR TU COMPRA! El pedido ha sido guardado.');
-      // Aquí podríamos vaciar el carrito (pendiente)
+      alert('¡GRACIAS POR TU COMPRA! El pedido ha sido procesado.');
+      
+      // AQUÍ ESTÁ LA SOLUCIÓN: Vaciamos el carrito
+      clearCart();
+      
       navigate('/'); // Volver al inicio
     } catch (error) {
       console.error(error);
@@ -41,7 +43,7 @@ function Checkout() {
     }
   };
 
-  if (cart.length === 0) return <h2 style={{color:'white', textAlign:'center', marginTop:'50px'}}>El carrito está vacío</h2>;
+  if (cart.length === 0) return <h2 style={{color:'white', textAlign:'center', marginTop:'50px', fontFamily: "'Montserrat', sans-serif"}}>El carrito está vacío</h2>;
 
   return (
     <div style={{ minHeight: '100vh', padding: '40px', color: 'white', fontFamily: "'Montserrat', sans-serif", maxWidth: '600px', margin: '0 auto' }}>
@@ -80,7 +82,7 @@ function Checkout() {
             </p>
           </div>
 
-          <button type="submit" className="btn-minimal" style={{ padding: '15px', marginTop: '10px', fontWeight: 'bold', textTransform: 'uppercase' }}>
+          <button type="submit" className="btn-minimal" style={{ padding: '15px', marginTop: '10px', fontWeight: 'bold', textTransform: 'uppercase', background: 'white', color: 'black', border: 'none', cursor: 'pointer' }}>
             Confirmar Pedido
           </button>
         </form>
@@ -89,7 +91,6 @@ function Checkout() {
   );
 }
 
-// Estilo simple para los inputs (para no ensuciar el código)
 const inputStyle = {
   width: '100%',
   padding: '12px',
