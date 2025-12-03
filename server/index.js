@@ -1,21 +1,27 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+// 🛡️ IMPORTANTE PARA LA NOTA (SEGURIDAD Y MONITOREO)
+const helmet = require('helmet'); 
+const morgan = require('morgan'); 
+
 require('dotenv').config();
 
 // IMPORTAR RUTAS
 const obrasRoutes = require('./routes/obras');
-const pedidosRoutes = require('./routes/pedidos'); // <--- (NUEVO) Importamos el archivo de pedidos
+const pedidosRoutes = require('./routes/pedidos');
 
 const app = express();
 
-// MIDDLEWARES
+// MIDDLEWARES (Aquí ocurre la magia de seguridad)
+app.use(helmet()); // <--- 1. Oculta info del servidor a hackers (Cabeceras seguras)
+app.use(morgan('dev')); // <--- 2. Registra cada petición en la consola (Monitoreo)
 app.use(cors());
-app.use(express.json()); // Importante: permite recibir datos JSON del carrito
+app.use(express.json());
 
 // USAR LAS RUTAS
 app.use('/api/obras', obrasRoutes);
-app.use('/api/pedidos', pedidosRoutes); // <--- (NUEVO) Todo lo que vaya a /api/pedidos lo maneja ese archivo
+app.use('/api/pedidos', pedidosRoutes);
 
 // CONEXIÓN A BASE DE DATOS
 mongoose.connect(process.env.MONGO_URI)
@@ -24,7 +30,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 // RUTA DE PRUEBA
 app.get('/', (req, res) => {
-  res.send('API de Cristian Erré funcionando correctamente');
+  res.send('API de Cristian Erré segura y funcionando 🔒');
 });
 
 // ARRANCAR SERVIDOR

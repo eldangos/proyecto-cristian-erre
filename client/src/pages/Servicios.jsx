@@ -46,7 +46,7 @@ function Servicios() {
           </div>
         </div>
 
-        {/* SERVICIO 2: DISEÑO DIGITAL */}
+        {/* SERVICIO 2: DISEÑO DIGITAL (IMAGEN NUEVA) */}
         <div style={{ display: 'flex', flexWrap: 'wrap-reverse', gap: '40px', alignItems: 'center', background: '#1e1e1e', padding: '30px', borderRadius: '8px', border: '1px solid #333' }}>
           <div style={{ flex: '1 1 400px' }}>
             <h2 style={{ fontSize: '2rem', color: '#3498db', marginBottom: '15px' }}>DISEÑO DIGITAL</h2>
@@ -64,7 +64,8 @@ function Servicios() {
           </div>
           <div style={{ flex: '1 1 300px' }}>
             <img 
-              src="https://images.unsplash.com/photo-1626785774573-4b7993143a26?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+              // HE CAMBIADO ESTA URL POR UNA NUEVA QUE SÍ FUNCIONA
+              src="https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
               alt="Diseño Digital" 
               style={{ width: '100%', height: '300px', objectFit: 'cover', borderRadius: '4px' }}
             />

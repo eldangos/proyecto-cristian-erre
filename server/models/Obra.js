@@ -5,7 +5,7 @@ const ObraSchema = new mongoose.Schema({
   descripcion: String,
   tecnica: String,
   dimensiones: String,
-  precio: Number,
+  precio: { type: Number, required: true, min: 0 }, // Mejora: Validación de precio positivo
   imagenURL: String,
   disponible: { type: Boolean, default: true },
   
@@ -16,5 +16,8 @@ const ObraSchema = new mongoose.Schema({
   motivoEliminacion: { type: String, default: '' },
   fechaEliminacion: { type: Date }
 }, { timestamps: true });
+
+ObraSchema.index({ categoria: 1 }); // Acelera los filtros de la galería
+ObraSchema.index({ disponible: 1, eliminada: 1 }); // Acelera la carga inicial (solo mostrar disponibles y no borradas)
 
 module.exports = mongoose.model('Obra', ObraSchema);
